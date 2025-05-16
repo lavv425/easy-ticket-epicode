@@ -2,5 +2,8 @@ export const UNAUTHORIZED = "/unauthorized";
 export const NOT_FOUND = "*";
 
 export const LOGIN = "/login";
-export const VERIFY_2FA = "/2fa";
 export const DASHBOARD = "/";
+export const TICKETS = "/tickets";
+export const CREATE_TICKET = `${TICKETS}/create`;
+export const USERS = "/users";
+export const LOGOUT = "/logout";

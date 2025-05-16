@@ -1,0 +1,1 @@
+export const selectIsNavbarOpen = (state) => state.app.isNavbarOpen;

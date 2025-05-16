@@ -1,23 +1,27 @@
-import { DEFAULT_OK_RESPONSE, ERROR_RESPONSE } from "../../constants/constants.js";
+import { BAD_REQUEST_RESPONSE, DEFAULT_OK_RESPONSE, ERROR_RESPONSE } from "../../constants/constants.js";
 import Users from "../../models/Users/Users.js";
-import { readableDate } from "../../utils/utils.js";
+import { getUserFromJwt, readableDate } from "../../utils/utils.js";
 
 const getUsers = async (req, res) => {
     try {
-        const UsersModel = await Users();
-        const usersFound = await UsersModel.find({}, { password: 0, _id: 0, __v: 0 }).lean();
+        const token = req.headers.authorization?.split(" ")?.[1];
 
+        if (!token) {
+            return res.status(400).json({ ...BAD_REQUEST_RESPONSE, message: "Token is required" });
+        }
+
+        const userUuid = getUserFromJwt(token);
+
+        const UsersModel = await Users();
+        const usersFound = await UsersModel.find({ uuid: { $ne: userUuid } }, { password: 0, _id: 0, __v: 0 }).lean();
 
         const users = usersFound?.map(user => ({
             uuid: user.uuid,
-            nome: user.first_name,
-            cognome: user.last_name,
+            first_name: user.first_name,
+            last_name: user.last_name,
             email: user.email,
             username: user.username,
-            sede: user.site,
-            ruolo: user.role,
-            dipartimento: user.department,
-            "Data creazione": readableDate(user.created_at)
+            created_at: readableDate(user.created_at)
         }))
 
         return res.status(200).json({ ...DEFAULT_OK_RESPONSE, data: users });

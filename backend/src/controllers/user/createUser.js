@@ -4,10 +4,10 @@ import Users from "../../models/Users/Users.js";
 
 const createUser = async (req, res) => {
     try {
-        const { first_name, last_name, email, username, password, role } = await req.body;
+        const { first_name, last_name, email, username, password } = req.body;
 
-        if (!first_name || !last_name || !email || !username || !password || !role) {
-            return res.send(400).json({ ...BAD_REQUEST_RESPONSE, message: "Missing required fields" });
+        if (!first_name || !last_name || !email || !username || !password) {
+            return res.status(400).json({ ...BAD_REQUEST_RESPONSE, message: "Missing required fields" });
         }
 
         const UsersModel = await Users();
@@ -36,7 +36,6 @@ const createUser = async (req, res) => {
             email,
             username,
             password: hashedPassword,
-            role,
         });
 
         return res.status(201).json(DEFAULT_OK_RESPONSE);

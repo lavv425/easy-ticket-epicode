@@ -1,3 +1,6 @@
+import { JWT_SECRET } from "../constants/constants.js";
+import jwt from 'jsonwebtoken';
+
 export const readableDate = (date) => {
     if (!date) return null;
 
@@ -15,3 +18,14 @@ export const readableDate = (date) => {
         year: "numeric",
     });
 }
+
+
+export const getUserFromJwt = (token) => {
+    const decoded = jwt.verify(token, JWT_SECRET);
+
+    if (!decoded.uuid) {
+        return null;
+    }
+
+    return decoded?.uuid; // {uuid: string} SHOULD BE ALWAYS PRESENT, BUT JUST TO BE SURE LET'S USE IT AS NULLISH x?.uuid
+};

@@ -1,30 +1,38 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { AUTH_TOKEN_LS } from '../../Constants/Constants';
 
 const sessionSlice = createSlice({
     name: 'session',
     initialState: {
-        user: null,
+        isLogged: false,
         token: null,
-        loading: false,
-        error: null,
     },
     reducers: {
-        setLoading: (state, action) => {
-            state.loading = action.payload;
-        },
-        setUser: (state, action) => {
-            state.user = action.payload.user;
-            state.token = action.payload.token;
-        },
-        setError: (state, action) => {
-            state.error = action.payload;
+        login: (state, action) => {
+            let token = action?.payload?.token;
+
+            if (!token) {
+                const lsToken = localStorage.getItem(AUTH_TOKEN_LS);
+                if (!lsToken) {
+                    state.isLogged = false;
+                    state.token = null;
+                    return;
+                }
+                token = lsToken;
+            }
+
+            localStorage.setItem(AUTH_TOKEN_LS, token);
+            state.token = token;
+            state.isLogged = true;
         },
         logout: (state) => {
-            state.user = null;
+            localStorage.clear();
+
+            state.isLogged = false;
             state.token = null;
-        }
+        },
     }
 });
 
-export const { setLoading, setUser, setError, logout } = sessionSlice.actions;
+export const { login, logout } = sessionSlice.actions;
 export default sessionSlice.reducer;

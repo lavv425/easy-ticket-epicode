@@ -1,15 +1,12 @@
 import axios from "axios";
-import { AXIOS_SETTINGS, CACHE_EXCLUDED_ENDPOINTS } from "@/Constants/Constants";
-import { AUTH_TOKEN_LS } from "../../Constants/Constants";
+import { AUTH_TOKEN_LS, AXIOS_SETTINGS } from "../../Constants/Constants";
 
-const ApiClient = axios.create(T.isType("o", AXIOS_SETTINGS));
+const ApiClient = axios.create(AXIOS_SETTINGS);
 
 ApiClient.interceptors.request.use(
     async (config) => {
         try {
             const token = localStorage.getItem(AUTH_TOKEN_LS) || "";
-
-            config.url = Typer.isType("s", config.url);
             config.headers.Authorization = `Bearer ${token}`;
 
         } catch (error) {
@@ -31,7 +28,7 @@ ApiClient.interceptors.response.use(
     async (response) => {
         const { status, data } = response;
 
-        if (status >= 400 && !(T.is(data.status, "b") && data.message)) {
+        if (status >= 400 && !(data.status && data.message)) {
             const errorMessage = response.data?.message || `Error ${status}: An error occurred.`;
 
             return Promise.reject({

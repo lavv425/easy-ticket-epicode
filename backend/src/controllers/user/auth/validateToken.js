@@ -1,11 +1,9 @@
 import jwt from "jsonwebtoken";
-import { BAD_REQUEST_RESPONSE, DEFAULT_OK_RESPONSE, ERROR_RESPONSE } from "../../../constants/constants.js";
+import { BAD_REQUEST_RESPONSE, DEFAULT_OK_RESPONSE, ERROR_RESPONSE, JWT_SECRET } from "../../../constants/constants.js";
 
 const validateToken = async (req, res) => {
     try {
-        const authHeader = req.headers.authorization?.split(" ")?.[1];
-
-        const token = authHeader?.token;
+        const token = req.headers.authorization?.split(" ")?.[1];
 
         if (!token) {
             return res.status(400).json({ ...BAD_REQUEST_RESPONSE, message: "Token is required" });

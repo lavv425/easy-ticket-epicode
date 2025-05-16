@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { randomUUID } from "crypto";
 import { COLLECTION_TICKETS, TICKET_PRIORITIES, TICKET_STATUSES } from "../../constants/constants.js";
 import { getModelOptions } from "../../config/mongoose.js";
+import Users from "../Users/Users.js";
 
 const TicketsSchema = new mongoose.Schema({
     uuid: {
@@ -36,6 +37,18 @@ const TicketsSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     }
+});
+
+TicketsSchema.pre("save", async function (next) {
+    const UsersModel = await Users();
+
+    const user = await UsersModel.findOne({ uuid: this.created_by });
+
+    if (!user) {
+        throw new Error("User not found");
+    }
+
+    next();
 });
 
 const Tickets = async () => {

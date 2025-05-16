@@ -9,6 +9,8 @@ import apiRouter from './routes/api.js';
 
 
 const app = express();
+app.disable('x-powered-by');
+
 app.use(express.json());
 app.use(cors(CORS_CONFIG));
 app.use(rateLimit(RATE_LIMITER_CONFIG));
@@ -16,7 +18,7 @@ app.use(helmet());
 
 app.use(API_NAMESPACE, apiRouter);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.FASTIFY_SERVER_PORT || 30001;
 
 app.listen(PORT, () => {
     console.log(`Server started at http://localhost:${PORT}`);

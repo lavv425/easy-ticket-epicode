@@ -2,11 +2,12 @@ import js from "@eslint/js";
 import globals from "globals";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
+import reactCompiler from "eslint-plugin-react-compiler";
 
 export default [
   { ignores: ["dist"] },
   {
-    extends: [js.configs.recommended],
+    // extends: [js.configs.recommended],
     files: ["**/*.{js,jsx}"],
     languageOptions: {
       ecmaVersion: 2020,
@@ -29,6 +30,8 @@ export default [
         "error",
         { varsIgnorePattern: "^[A-Z_]", argsIgnorePattern: "^_" },
       ],
+      "react-compiler/react-compiler": "error",
+      "react-hooks/exhaustive-deps": "warn",
       "react-refresh/only-export-components": [
         "warn",
         { allowConstantExport: true },

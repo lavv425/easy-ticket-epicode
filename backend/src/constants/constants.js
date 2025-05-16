@@ -63,9 +63,9 @@ export const TICKET_STATUSES = {
 };
 
 export const TICKET_STATUS_LABELS = {
-    [TICKET_STATUSES.OPEN]: 'Aperto',
-    [TICKET_STATUSES.IN_PROGRESS]: 'In lavorazione',
-    [TICKET_STATUSES.RESOLVED]: 'Risolto',
+    [TICKET_STATUSES.OPEN]: 'Open',
+    [TICKET_STATUSES.IN_PROGRESS]: 'Work in progress',
+    [TICKET_STATUSES.RESOLVED]: 'Resolved',
 };
 
 export const TICKET_PRIORITIES = {
@@ -76,10 +76,10 @@ export const TICKET_PRIORITIES = {
 };
 
 export const TICKET_PRIORITY_LABELS = {
-    [TICKET_PRIORITIES.LOW]: 'Bassa',
-    [TICKET_PRIORITIES.MEDIUM]: 'Media',
-    [TICKET_PRIORITIES.HIGH]: 'Alta',
-    [TICKET_PRIORITIES.CRITICAL]: 'Critica',
+    [TICKET_PRIORITIES.LOW]: 'Low',
+    [TICKET_PRIORITIES.MEDIUM]: 'Medium',
+    [TICKET_PRIORITIES.HIGH]: 'High',
+    [TICKET_PRIORITIES.CRITICAL]: 'Critical',
 };
 
 export const USER_ROLES = {
