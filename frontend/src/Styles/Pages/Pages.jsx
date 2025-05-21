@@ -14,11 +14,11 @@ export const StyledPagesWrapper = memo(styled.div`
 padding: 20px;`);
 
 export const StyledLayoutWrapper = memo(styled.div`
-margin-left: ${({ $isLeftNavbarOpen }) => $isLeftNavbarOpen ? "240px" : "65px"};
+margin-left: ${({ $isLeftNavbarOpen, $isLayoutShown }) => !$isLayoutShown ? "0px" : $isLeftNavbarOpen ? "240px" : "65px"};
 transition: margin-left 0.3s ease;
 
   @media (max-width: 768px) {
-    margin-left: 57px;
+    margin-left: ${({ $isLayoutShown }) => !$isLayoutShown ? "0px" : "57px"};
   }`);
 
 
@@ -42,27 +42,30 @@ gap: 30px;
         // background: #1F1F35;
         background: #1c1c2b;
     }
-
-    & a {
-        margin-bottom:-30px;
-    }
         
   @media (max-width: 768px) {
     width: 80%;
   }`);
+
+export const StyledLoginLinks = memo(styled.div`
+display: flex;
+flex-direction: column-reverse;
+gap: 25px;
+margin-top: auto;
+margin-bottom: 35px;`);
 
 export const StyledLogo = memo(styled.h1`
 font-size: 1.8rem;
 font-weight: 700;
 text-align: center;
 margin: 0;
-color: #1a237e;`);
+color:#3d55b7;`);
 
 
 export const StyledButtonsWrapper = memo(styled.div`
 display: flex;
 gap: 10px;
-padding: 5px;
+padding: 15px;
 overflow: auto;`);
 
 export const Styled404Container = memo(styled.div`

@@ -1,29 +1,32 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
-import PropTypes from 'prop-types';
 import Button from '../UI/Button/Button';
 import { setMessage } from '../../Store/Slices/AppSlice';
 import { useDispatch } from 'react-redux';
 import { MAIL_REGEX, PASSWORD_REGEX } from '../../Constants/Validation';
+import SaveRoundedIcon from '@mui/icons-material/SaveRounded';
+import UndoRoundedIcon from '@mui/icons-material/UndoRounded';
+
+const DEFAULT_FORM_MODAL_VALUES = {
+    first_name: '',
+    last_name: '',
+    email: '',
+    username: '',
+    password: '',
+    confirm_password: '',
+};
 
 const UserFormModal = ({ open, onClose, onSubmit, isEditing, defaultValues = null }) => {
     const dispatch = useDispatch();
 
-    const [formData, setFormData] = useState({
-        first_name: '',
-        last_name: '',
-        email: '',
-        username: '',
-        password: '',
-        confirm_password: '',
-    });
+    const [formData, setFormData] = useState(DEFAULT_FORM_MODAL_VALUES);
 
     useEffect(() => {
         if (defaultValues) {
             setFormData({
                 ...defaultValues,
-                password: '', // empty when isEditing
-                confirm_password: ''
+                password: '', // always empty when isEditing === true
+                confirm_password: '' // always empty when isEditing === true
             });
         }
     }, [defaultValues]);
@@ -33,20 +36,13 @@ const UserFormModal = ({ open, onClose, onSubmit, isEditing, defaultValues = nul
     }, []);
 
     const handleModalClose = useCallback(() => {
-        setFormData({
-            first_name: '',
-            last_name: '',
-            email: '',
-            username: '',
-            password: '',
-            confirm_password: '',
-        });
+        setFormData(DEFAULT_FORM_MODAL_VALUES);
 
-        onClose();
+        onClose?.();
     }, [onClose]);
 
     const handleSubmit = useCallback(() => {
-        if (!formData.first_name || !formData.last_name || !formData.email || !formData.username || (isEditing && (!formData.password || !formData.confirm_password))) {
+        if ((!formData.first_name || !formData.last_name || !formData.email || !formData.username) && (!isEditing && (!formData.password || !formData.confirm_password))) {
             dispatch(setMessage({ type: "error", message: "Please fill in all fields" }));
             return;
         }
@@ -68,14 +64,14 @@ const UserFormModal = ({ open, onClose, onSubmit, isEditing, defaultValues = nul
             }
         }
 
-        onSubmit(formData);
+        onSubmit?.(formData);
         handleModalClose();
     }, [dispatch, formData, isEditing, handleModalClose, onSubmit]);
 
     return (
         <Dialog open={open} onClose={handleModalClose} maxWidth="sm" fullWidth>
             <DialogTitle>{defaultValues ? 'Edit User' : 'New User'}</DialogTitle>
-            <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 1 }}>
+            <DialogContent className='pt-10' sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 1 }}>
                 <TextField label="Name" value={formData.first_name} onChange={handleChange('first_name')} />
                 <TextField label="Surname" value={formData.last_name} onChange={handleChange('last_name')} />
                 <TextField label="Email" type="email" value={formData.email} onChange={handleChange('email')} />
@@ -88,19 +84,11 @@ const UserFormModal = ({ open, onClose, onSubmit, isEditing, defaultValues = nul
                 }
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleModalClose}>Cancel</Button>
-                <Button variant="contained" onClick={handleSubmit}>Save</Button>
+                <Button onClick={handleModalClose} icon={<UndoRoundedIcon />}>Cancel</Button>
+                <Button variant="contained" onClick={handleSubmit} icon={<SaveRoundedIcon />}>Save</Button>
             </DialogActions>
         </Dialog>
     );
-};
-
-UserFormModal.propTypes = {
-    open: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired,
-    onSubmit: PropTypes.func.isRequired,
-    editing: PropTypes.bool,
-    defaultValues: PropTypes.object
 };
 
 export default memo(UserFormModal);

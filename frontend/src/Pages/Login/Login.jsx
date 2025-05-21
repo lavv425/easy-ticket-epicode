@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, useValidateSession } from '../../Store/Thunks/SessionThunks';
 import TextField from '@mui/material/TextField';
 import Button from '../../Components/UI/Button/Button';
 import { setMessage } from '../../Store/Slices/AppSlice';
-import { StyledLoginWrapper, StyledLogo, StyledPagesTitle } from '../../Styles/Pages/Pages';
+import { StyledLoginLinks, StyledLoginWrapper, StyledLogo, StyledPagesTitle } from '../../Styles/Pages/Pages';
 import { DASHBOARD } from '../../Routes/Routes';
 import { selectIsLogged } from '../../Store/Selectors/SessionSelectors';
+import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const Login = () => {
 
         const res = await dispatch(loginUser(username.trim(), password));
 
-        if (res){
+        if (res) {
             nav(DASHBOARD);
         }
     }, [username, password, dispatch, nav]);
@@ -35,7 +36,7 @@ const Login = () => {
         if (e.key === 'Enter') handleSubmit();
     }, [handleSubmit]);
 
-    
+
     useEffect(() => {
         const asyncValidateSession = async () => {
             await validateSession();
@@ -54,10 +55,11 @@ const Login = () => {
 
                 <TextField value={username} onChange={(e) => setUsername(e.target.value)} label="Username" variant="outlined" fullWidth onKeyDown={handleKeyDown} />
                 <TextField value={password} onChange={(e) => setPassword(e.target.value)} label="Password" type="password" variant="outlined" fullWidth onKeyDown={handleKeyDown} />
-                <Link>Password dimenticata?</Link>
-                <Button onClick={handleSubmit} variant="contained" color="primary" >
-                    Accedi
-                </Button>
+                <StyledLoginLinks>
+                    <Button icon={<LoginRoundedIcon />} onClick={handleSubmit} variant="contained" color="primary" >
+                        Accedi
+                    </Button>
+                </StyledLoginLinks>
             </StyledLoginWrapper>
         </>
     );

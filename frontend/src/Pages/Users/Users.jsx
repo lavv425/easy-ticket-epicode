@@ -1,10 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import { StyledButtonsWrapper, StyledPagesTitle, StyledPagesWrapper } from "../../Styles/Pages/Pages";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { createUser, deleteUser, fetchUsers } from "../../Store/Thunks/UsersThunks";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createUser, deleteUser, fetchUser, fetchUsers, updateUser } from "../../Store/Thunks/UsersThunks";
 import Button from "../../Components/UI/Button/Button";
 import Table from "../../Components/UI/Table/Table";
 import UserFormModal from "../../Components/UserFormModal/UserFormModal";
+import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import BorderColorRoundedIcon from '@mui/icons-material/BorderColorRounded';
+import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 
 const Users = () => {
     const dispatch = useDispatch();
@@ -13,6 +16,7 @@ const Users = () => {
     const [openModal, setOpenModal] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editUserData, setEditUserData] = useState(null);
+    const tableRef = useRef();
 
     const headers = useMemo(() => [
         { id: 'first_name', label: 'Name' },
@@ -22,18 +26,10 @@ const Users = () => {
         { id: 'created_at', label: 'Creation Date' },
     ], []);
 
-    const body = useMemo(() => users ? users.map((t) => ({
-        uuid: t.uuid,
-        first_name: t.first_name,
-        last_name: t.last_name,
-        email: t.email,
-        username: t.username,
-        created_at: t.created_at,
-    })) : [], [users]);
+    const body = useMemo(() => users ? users : [], [users]);
 
 
     const onRowSelect = useCallback((selected) => {
-        console.log(selected);
         setSelectedUser(selected);
     }, []);
 
@@ -50,18 +46,34 @@ const Users = () => {
     const handleEdit = useCallback(() => {
         setIsEditing(true);
         setOpenModal(true);
-        setEditUserData(selectedUser);
-    }, [selectedUser]);
 
-    const handleSubmitUser = useCallback((formData) => {
-        dispatch(createUser(formData));
-    }, [dispatch]);
+        dispatch(fetchUser(selectedUser)).then((user) => {
+            setEditUserData(user);
+        });
+    }, [dispatch, selectedUser]);
+
+    const handleResetSelection = useCallback(() => {
+        setSelectedUser("");
+        tableRef.current?.resetSelection();
+    }, []);
 
     const handleModalClose = useCallback(() => {
         setOpenModal(false);
         setEditUserData(null);
         setIsEditing(false);
-    }, []);
+        handleResetSelection();
+    }, [handleResetSelection]);
+
+    const handleSubmitUser = useCallback((formData) => {
+        if (isEditing) {
+            dispatch(updateUser(formData, selectedUser));
+        } else {
+            dispatch(createUser(formData));
+        }
+
+        handleModalClose();
+    }, [dispatch, handleModalClose, isEditing, selectedUser]);
+
 
     useEffect(() => {
         dispatch(fetchUsers());
@@ -71,21 +83,21 @@ const Users = () => {
             <StyledPagesTitle>Users</StyledPagesTitle>
             <StyledPagesWrapper>
                 <StyledButtonsWrapper>
-                    <Button variant="contained" onClick={handleCreate}>
+                    <Button variant="contained" icon={<AddRoundedIcon />} onClick={handleCreate}>
                         New User
                     </Button>
                     {selectedUser && (
-                        <Button variant="contained" color="warning" onClick={handleEdit}>
+                        <Button variant="contained" color="warning" icon={<BorderColorRoundedIcon />} onClick={handleEdit}>
                             Edit
                         </Button>
                     )}
                     {selectedUser && (
-                        <Button variant="contained" color="error" onClick={handleDelete}>
+                        <Button variant="contained" color="error" icon={<DeleteRoundedIcon />} onClick={handleDelete}>
                             Delete
                         </Button>
                     )}
                 </StyledButtonsWrapper>
-                <Table headers={headers} body={body} selectable onRowSelect={onRowSelect} />
+                <Table ref={tableRef} headers={headers} body={body} selectable onRowSelect={onRowSelect} />
             </StyledPagesWrapper>
 
             <UserFormModal

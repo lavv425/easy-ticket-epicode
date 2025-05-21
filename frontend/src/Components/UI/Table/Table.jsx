@@ -1,12 +1,16 @@
-import PropTypes from 'prop-types';
 import { Table as MuiTable, TableBody, TableCell, TableContainer, TableHead, TableRow, TablePagination, Radio, Paper } from '@mui/material';
-import { useCallback, useMemo, useState } from 'react';
+import { forwardRef, useCallback, useImperativeHandle, useMemo, useState } from 'react';
 import { memo } from 'react';
 
-const Table = ({ headers, body, selectable = false, onRowSelect = () => { } }) => {
-    const [selected, setSelected] = useState([]);
+const Table = forwardRef(({ headers, body, selectable = false, paginated = true, onRowSelect = () => { } }, ref) => {
+    const [selected, setSelected] = useState();
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+
+    useImperativeHandle(ref, () => ({
+        resetSelection: () => setSelected(undefined),
+        getSelected: () => selected
+    }));
 
     const handleClick = useCallback((id) => {
         setSelected(id);
@@ -31,7 +35,7 @@ const Table = ({ headers, body, selectable = false, onRowSelect = () => { } }) =
                         <TableBody>
                             {visibleRows.map((row) => {
                                 const rowId = row.uuid ?? row.id ?? JSON.stringify(row);
-                                const isItemSelected = selected.includes(rowId);
+                                const isItemSelected = selected === rowId;
 
                                 return (
                                     <TableRow
@@ -60,30 +64,22 @@ const Table = ({ headers, body, selectable = false, onRowSelect = () => { } }) =
                     </MuiTable>
                 </TableContainer>
             </Paper>
-            <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                component="div"
-                count={body.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={(e, newPage) => setPage(newPage)}
-                onRowsPerPageChange={(e) => {
-                    setRowsPerPage(parseInt(e.target.value, 10));
-                    setPage(0);
-                }}
-            />
+            {paginated &&
+                <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component="div"
+                    count={body.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={(e, newPage) => setPage(newPage)}
+                    onRowsPerPageChange={(e) => {
+                        setRowsPerPage(parseInt(e.target.value, 10));
+                        setPage(0);
+                    }}
+                />
+            }
         </>
     );
-};
-
-Table.propTypes = {
-    headers: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        label: PropTypes.string.isRequired
-    })).isRequired,
-    body: PropTypes.arrayOf(PropTypes.object).isRequired,
-    selectable: PropTypes.bool,
-    onRowSelect: PropTypes.func
-};
+});
 
 export default memo(Table);

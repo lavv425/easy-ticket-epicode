@@ -1,4 +1,4 @@
-import { BAD_REQUEST_RESPONSE, ERROR_RESPONSE, RESOURCE_NOT_FOUND_RESPONSE } from "../../constants/constants.js";
+import { BAD_REQUEST_RESPONSE, DEFAULT_OK_RESPONSE, ERROR_RESPONSE, RESOURCE_NOT_FOUND_RESPONSE } from "../../constants/constants.js";
 import Users from "../../models/Users/Users.js";
 
 const getUser = async (req, res) => {

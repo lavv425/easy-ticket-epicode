@@ -5,7 +5,11 @@ import { deleteTicket, fetchTickets } from "../../Store/Thunks/TicketsThunks";
 import Button from '../../Components/UI/Button/Button';
 import Table from "../../Components/UI/Table/Table";
 import { useNavigate } from "react-router-dom";
-import { CREATE_TICKET } from "../../Routes/Routes";
+import { CREATE_TICKET, EDIT_TICKET, VIEW_TICKET_BASE } from "../../Routes/Routes";
+import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
+import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
+import BorderColorRoundedIcon from '@mui/icons-material/BorderColorRounded';
 
 const Tickets = () => {
     const dispatch = useDispatch();
@@ -23,26 +27,24 @@ const Tickets = () => {
         { id: 'created_at', label: 'Creation Date' },
     ], []);
 
-    const body = useMemo(() => tickets ? tickets.map((t) => ({
-        uuid: t.uuid,
-        title: t.title,
-        priority: t.priority,
-        status: t.status,
-        created_by: t.created_by,
-        created_at: t.created_at,
-    })) : [], [tickets]);
+    const body = useMemo(() => tickets ? tickets : [], [tickets]);
 
     const onRowSelect = useCallback((selected) => {
         setSelectedTicket(selected);
     }, []);
+
+    const handleEdit = useCallback(() => {
+        nav(`${EDIT_TICKET}/${selectedTicket}`);
+    }, [nav, selectedTicket]);
 
     const handleDelete = useCallback(() => {
         dispatch(deleteTicket(selectedTicket));
         setSelectedTicket("");
     }, [dispatch, selectedTicket]);
 
-    const handleEdit = useCallback(() => { }, []);
-
+    const handleView = useCallback(() => {
+        nav(`${VIEW_TICKET_BASE}/${selectedTicket}`);
+    }, [nav, selectedTicket]);
 
     useEffect(() => {
         dispatch(fetchTickets());
@@ -53,17 +55,22 @@ const Tickets = () => {
             <StyledPagesTitle>Tickets</StyledPagesTitle>
             <StyledPagesWrapper>
                 <StyledButtonsWrapper>
-                    <Button variant="contained" onClick={() => nav(CREATE_TICKET)}>
+                    <Button variant="contained" icon={<AddRoundedIcon />} onClick={() => nav(CREATE_TICKET)}>
                         New Ticket
                     </Button>
                     {selectedTicket && (
-                        <Button variant="contained" color="warning" onClick={handleDelete}>
-                            Delete
-                        </Button>
+                        <>
+                            <Button variant="contained" color="warning" icon={<BorderColorRoundedIcon />} onClick={handleEdit}>
+                                Edit
+                            </Button>
+                            <Button variant="contained" color="secondary" icon={<VisibilityRoundedIcon />} onClick={handleView}>
+                                View
+                            </Button>
+                        </>
                     )}
                     {selectedTicket && (
-                        <Button variant="contained" color="error" onClick={handleDelete}>
-                            Edit
+                        <Button variant="contained" icon={<DeleteRoundedIcon />} color="error" onClick={handleDelete}>
+                            Delete
                         </Button>
                     )}
                 </StyledButtonsWrapper>

@@ -11,7 +11,7 @@ const DefaultLayout = () => {
     const isLeftNavbarOpen = useSelector(selectIsNavbarOpen);
 
     return (
-        <StyledLayoutWrapper $isLeftNavbarOpen={isLeftNavbarOpen}>
+        <StyledLayoutWrapper $isLeftNavbarOpen={isLeftNavbarOpen} $isLayoutShown={isLogged}>
             {isLogged && <AppDrawer />}
             <Outlet />
         </StyledLayoutWrapper>

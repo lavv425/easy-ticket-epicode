@@ -15,12 +15,13 @@ const createUser = async (req, res) => {
         const existingUser = await UsersModel.findOne({
             $or: [
                 { email },
-                { first_name, last_name }
+                { first_name, last_name },
+                { username }
             ],
         });
 
         if (existingUser) {
-            return res.status(400).json({ ...BAD_REQUEST_RESPONSE, message: "User already exists" });
+            return res.status(400).json({ ...BAD_REQUEST_RESPONSE, message: "Another user with the same email, name or username already exists" });
         }
 
         const hashedPassword = await hash(password, {

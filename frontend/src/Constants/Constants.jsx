@@ -39,3 +39,8 @@ export const TICKET_PRIORITY_LABELS = {
     [TICKET_PRIORITIES.HIGH]: 'High',
     [TICKET_PRIORITIES.CRITICAL]: 'Critical',
 };
+
+export const TICKET_PARAMS = {
+    CREATE: 'create',
+    EDIT: 'edit',
+};
