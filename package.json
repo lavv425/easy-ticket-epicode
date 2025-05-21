@@ -1,8 +1,8 @@
 {
     "scripts": {
-        "serve:frontend": "npm run build:pm2:frontend && serve -s dist",
-        "build:pm2:frontend": "cd ./frontend && npm run build && pm2 delete easy_ticket_epc_frontend_v1 || true && pm2 start npx --name easy_ticket_epc_frontend_v1",
-        "serve:backend": "cd ./backend && npm start",
-        "serve": "npm run build:pm2:frontend && npm run serve:frontend && npm run serve:backend"
+        "build:pm2:frontend": "cd ./frontend && npm run build && pm2 delete easy_ticket_epc_frontend_v1 || true && pm2 start npx --name easy_ticket_epc_frontend_v1 -- serve -s dist",
+        "serve:frontend": "npm run build:pm2:frontend",
+        "serve:backend": "cd ./backend && npm run pm2",
+        "serve": "npm run serve:frontend && npm run serve:backend"
     }
 }

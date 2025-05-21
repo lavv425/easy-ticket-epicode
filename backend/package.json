@@ -1,12 +1,13 @@
 {
-  "name": "ticket-support-backend",
+  "name": "easy-ticket-epc-backend",
   "version": "1.0.0",
   "description": "Sistema di ticket IT - Backend con Express e Mongoose",
   "main": "server.js",
   "type": "module",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "pm2": "pm2 start src/server.js --name easy_ticket_epc_backend_v1"
   },
   "keywords": [
     "express",
