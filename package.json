@@ -1,6 +1,6 @@
 {
     "scripts": {
-        "build:pm2:frontend": "cd ./frontend && npm run build && pm2 delete easy_ticket_epc_frontend_v1 || true && pm2 start npx --name easy_ticket_epc_frontend_v1 -- serve -s dist",
+        "build:pm2:frontend": "cd ./frontend && npm run build && pm2 delete easy_ticket_epc_frontend_v1 || true && pm2 start 'npx serve -s dist -l 30000' --name easy_ticket_epc_frontend_v1",
         "serve:frontend": "npm run build:pm2:frontend",
         "serve:backend": "cd ./backend && npm run pm2",
         "serve": "npm run serve:frontend && npm run serve:backend"
