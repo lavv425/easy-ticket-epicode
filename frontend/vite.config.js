@@ -4,7 +4,7 @@ import { VitePWA } from "vite-plugin-pwa";
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
-  const BACKEND_BASE_URL = "http://localhost:30001/api";
+  const BACKEND_BASE_URL = mode === "development" || !mode ? "http://localhost:30001/api" : "https://easy-ticket-epc.michaellavigna.com/api";
 
   return {
     server: {
