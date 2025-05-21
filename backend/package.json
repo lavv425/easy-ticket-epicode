@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "pm2": "pm2 start src/server.js --name easy_ticket_epc_backend_v1"
+    "pm2": "NODE_ENV=production pm2 start src/server.js --name easy_ticket_epc_backend_v1"
   },
   "keywords": [
     "express",

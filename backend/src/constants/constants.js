@@ -7,8 +7,8 @@ export const COLLECTION_RESET_CODES = "reset-codes";
 export const JWT_SECRET = "b^'!1!!dln(L(d1)Vs#jSne6q{IWv.@NQR,~";
 export const JWT_BASE_SETTINGS = {
     expiresIn: "2h",
-    issuer: "easy-ticket",
-    audience: "https://easy-ticket.michaellavigna.com",
+    issuer: "easy-ticket-epc",
+    audience: "https://easy-ticket-epc.michaellavigna.com",
 };
 
 export const FIVE_MINUTES_IN_MS = 5 * 60 * 1000;

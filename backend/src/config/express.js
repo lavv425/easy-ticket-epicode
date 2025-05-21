@@ -1,4 +1,4 @@
-const FRONTEND_URL = (process.env.NODE_ENV === "development" || !process.env.NODE_ENV) ? "http://localhost:30000" : "https://easy-ticket.michaellavigna.com";
+const FRONTEND_URL = (process.env.NODE_ENV === "development" || !process.env.NODE_ENV) ? "http://localhost:30000" : "https://easy-ticket-epc.michaellavigna.com";
 
 export const RATE_LIMITER_CONFIG = {
   windowMs: 1 * 60 * 1000, // 1 minute
