@@ -1,0 +1,7 @@
+@import url(./fonts/OpenSans/style.css);
+* {
+  font-family: "Open Sans", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", system-ui, Avenir, Helvetica, Arial,
+    sans-serif;
+}
