@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
-    "pm2": "NODE_ENV=production pm2 start src/server.js --name easy_ticket_epc_backend_v1"
+    "dev": "node src/models/seed.js && nodemon src/server.js",
+    "pm2": "node src/models/seed.js && NODE_ENV=production pm2 start src/server.js --name easy_ticket_epc_backend_v1"
   },
   "keywords": [
     "express",

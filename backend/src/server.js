@@ -18,7 +18,7 @@ app.use(helmet());
 
 app.use(API_NAMESPACE, apiRouter);
 
-const PORT = process.env.FASTIFY_SERVER_PORT || 30001;
+const PORT = process.env.EXPRESS_SERVER_PORT || 30001;
 
 app.listen(PORT, () => {
     console.log(`Server started at http://localhost:${PORT}`);
