@@ -1,5 +1,5 @@
-import { argon2id, hash } from "argon2";
 import "../config/dotenv.js";
+import { argon2id, hash } from "argon2";
 import Users from "./Users/Users.js";
 
 const main = async () => {
@@ -33,6 +33,7 @@ const main = async () => {
 
         if (existingUser) {
             console.log('User already exists, skipping...');
+            process.exit(0);
             return;
         }
 
@@ -49,6 +50,7 @@ const main = async () => {
         });
 
         console.log('Seeding completed successfully.');
+        process.exit(0);
     } catch (error) {
         console.error('Error seeding the database:', error);
         process.exit(1);
