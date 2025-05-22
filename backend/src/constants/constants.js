@@ -4,7 +4,8 @@ export const COLLECTION_USERS = "users";
 export const COLLECTION_TICKETS = "tickets";
 export const COLLECTION_RESET_CODES = "reset-codes";
 
-export const JWT_SECRET = "b^'!1!!dln(L(d1)Vs#jSne6q{IWv.@NQR,~";
+export const JWT_SECRET = process.env.JWT_SECRET;
+
 export const JWT_BASE_SETTINGS = {
     expiresIn: "2h",
     issuer: "easy-ticket-epc",
