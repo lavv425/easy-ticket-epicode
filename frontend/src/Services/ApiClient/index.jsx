@@ -13,7 +13,7 @@ ApiClient.interceptors.request.use(
             if (error instanceof Error) {
                 return Promise.reject(new Error(`Invalid Url: ${error.message}`));
             } else {
-                return Promise.reject(new Error('Invalid Url: errore sconosciuto'));
+                return Promise.reject(new Error('Invalid Url: unknown error'));;
             }
         }
         return config;

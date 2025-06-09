@@ -21,7 +21,7 @@ const Login = () => {
 
     const handleSubmit = useCallback(async () => {
         if (!username || !password) {
-            dispatch(setMessage({ type: 'warning', message: 'Inserisci username e password' }));
+            dispatch(setMessage({ type: 'warning', message: 'Insert username and password.' }));
             return;
         }
 
