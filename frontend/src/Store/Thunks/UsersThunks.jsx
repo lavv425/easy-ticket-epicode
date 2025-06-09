@@ -54,6 +54,7 @@ export const deleteUser = (uuid) => async (dispatch) => {
         }
 
         await dispatch(fetchUsers());
+        dispatch(setMessage({ type: "success", message }));
     } catch (err) {
         dispatch(setMessage({ type: "error", message: err.message }));
     } finally {
@@ -96,7 +97,6 @@ export const updateUser = (userData, uuid) => async (dispatch) => {
         await dispatch(fetchUsers());
 
         dispatch(setMessage({ type: "success", message }));
-
     } catch (err) {
         dispatch(setMessage({ type: "error", message: err.message }));
     } finally {
