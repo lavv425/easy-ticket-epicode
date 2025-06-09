@@ -86,7 +86,7 @@ export const AppProvider = ({ children }) => {
         setIsLoading: (value) => dispatch(setLoading(value))
     }), [loading, dispatch]);
 
-    const handleClose = useCallback((event, reason) => {
+    const handleClose = useCallback((_, reason) => {
         if (reason === 'clickaway') return;
         dispatch(clearMessage());
     }, [dispatch]);
