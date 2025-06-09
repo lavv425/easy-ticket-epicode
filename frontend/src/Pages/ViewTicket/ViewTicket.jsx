@@ -17,6 +17,7 @@ const ViewTicket = () => {
     const [ticket, setTicket] = useState(null);
 
     useEffect(() => {
+        // if the uuid is not a valid uuid, redirect to the previous page
         if (!isUuid(uuid)) {
             dispatch(setMessage({ type: 'error', message: 'Invalid ticket id' }));
             nav(-1);

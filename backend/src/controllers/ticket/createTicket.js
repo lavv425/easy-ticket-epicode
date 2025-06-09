@@ -5,7 +5,7 @@ import { getUserFromJwt } from "../../utils/utils.js";
 
 const createTicket = async (req, res) => {
     try {
-        // this should be a middleware but ok, we care about the frontend lol
+        // this should be a middleware but ok, we care about the frontend
         const token = req.headers.authorization?.split(" ")?.[1];
 
         if (!token) {

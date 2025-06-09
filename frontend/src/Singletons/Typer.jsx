@@ -3,6 +3,16 @@ import { TYPER_UUID_V4, UUIDV4_REGEX } from "../Constants/Validation";
 
 const T = Typer;
 
+/**
+ * @description Register a new type with a custom validation function using Typer
+ * @param {string} typeName
+ * @param {Function} type
+ * @returns {void}
+ * @throws {TypeError}
+ * 
+ * @see https://github.com/lavv425/Typer
+ * @see https://lavv425.github.io/Typer/
+ */
 T.registerType(TYPER_UUID_V4, (uuid) => {
     const isValidUuid = (uuid) => {
         try {
