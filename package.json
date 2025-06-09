@@ -3,6 +3,12 @@
         "build:pm2:frontend": "cd ./frontend && npm run build && pm2 delete easy_ticket_epc_frontend_v1 || true && pm2 start 'npx serve -s dist -l 30000' --name easy_ticket_epc_frontend_v1",
         "serve:frontend": "npm run build:pm2:frontend",
         "serve:backend": "pm2 delete easy_ticket_epc_backend_v1 || true && cd ./backend && npm run pm2",
-        "serve": "npm run serve:frontend && npm run serve:backend"
+        "serve": "npm run serve:frontend && npm run serve:backend",
+        "dev:frontend": "cd ./frontend && npm run dev",
+        "dev:backend": "cd ./backend && npm run dev",
+        "start": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\""
+    },
+    "devDependencies": {
+        "concurrently": "^9.1.2"
     }
 }

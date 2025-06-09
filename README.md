@@ -34,20 +34,25 @@ git clone https://github.com/lavv425/easy-ticket-epicode.git
 cd easy-ticket
 ```
 
-### 2. Install Frontend dependencies
+### 2. Install dependencies
+```bash
+npm install
+```
+
+### 3. Install Frontend dependencies
 
 ```bash
 cd frontend
 npm install
 ```
 
-### 3. Install Backend dependencies
+### 4. Install Backend dependencies
 ```bash
 cd ../backend # or cd backend if you are already in the ./ path
 npm install
 ```
 
-### 4. Backend Setup
+### 5. Backend Setup
 - Create a `.env` file in the `backend` directory with the following content (or use the `.env.example` file as a template):
 ```
 EXPRESS_SERVER_PORT=30001
@@ -61,6 +66,11 @@ BASE_USER_PASSWORD=your_base_user_password
 ```
 
 ## ✅ Start the application
+
+#### Start Frontend and Backend simultaneously
+```bash
+npm start
+```
 
 #### Starting theFrontend
 ```bash
@@ -84,3 +94,7 @@ This will start the backend development server, accessible at **http://localhost
 Go to **http://localhost:30000** in your browser to access the application with:
 - Username: `base.user`
 - Password: `base-user-password that you set in the .env file`
+
+
+## 🌐 Live Demo
+You can access the live demo of the application at [EasyTicket](https://easy-ticket-epc.michaellavigna.com/).
