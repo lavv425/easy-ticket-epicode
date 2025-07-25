@@ -14,6 +14,75 @@ export const AXIOS_SETTINGS = {
     validateStatus: (status) => status >= 200 && status <= 500,
 };
 
+export const SITE_THEME = {
+    palette: {
+        mode: 'light',
+        primary: {
+            main: '#1976d2',
+            light: '#63a4ff',
+            dark: '#004ba0',
+            contrastText: '#fff',
+        },
+        secondary: {
+            main: '#9c27b0',
+            light: '#d05ce3',
+            dark: '#6a0080',
+            contrastText: '#fff',
+        },
+        success: {
+            main: '#2e7d32',
+        },
+        error: {
+            main: '#d32f2f',
+        },
+        warning: {
+            main: '#f57c00',
+        },
+        info: {
+            main: '#0288d1',
+        },
+        background: {
+            default: '#f4f6f8',
+            paper: '#ffffff',
+        },
+        text: {
+            primary: '#212121',
+            secondary: '#616161',
+        },
+    },
+    typography: {
+        fontFamily: `'Open Sans', 'Roboto', 'Helvetica', 'Arial', sans-serif`,
+        fontSize: 14,
+        button: {
+            textTransform: 'none',
+            fontWeight: 600,
+        },
+        h6: {
+            fontWeight: 700,
+        },
+    },
+    shape: {
+        borderRadius: 8,
+    },
+    components: {
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    borderRadius: 8,
+                    padding: '6px 16px',
+                },
+            },
+        },
+        MuiPaper: {
+            styleOverrides: {
+                rounded: {
+                    borderRadius: 12,
+                },
+            },
+        },
+    },
+};
+
 export const TICKET_STATUSES = {
     OPEN: 'open',
     IN_PROGRESS: 'in_progress',
